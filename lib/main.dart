@@ -15,7 +15,7 @@ void main() async {
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
             initialBinding: ControllerBinding(),
             debugShowCheckedModeBanner: false,
-            title: 'TicTok',
+            title: 'Tik Tok',
             theme: ThemeData.dark()
                 .copyWith(scaffoldBackgroundColor: backgroundColor),
             home: LoginScreen(),
