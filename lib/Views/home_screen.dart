@@ -1,9 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:tik_tok_clone/Views/profile_screen.dart';
 import 'package:tik_tok_clone/Views/search_screen.dart';
 
-import '../Custom Widgets/custom_icon.dart';
 import 'add_post_screen.dart';
 import 'feed_screen.dart';
 import 'message_screen.dart';
@@ -30,25 +32,53 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: currentIndex,
-          onTap: ((value) {
-            setState(() {
-              currentIndex = value;
-            });
-          }),
-          elevation: 10,
-          unselectedItemColor: Colors.white,
-          selectedItemColor: Colors.red,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-            BottomNavigationBarItem(icon: CustomIcon(), label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.message), label: 'Messages'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
-          ]),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+        child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            currentIndex: currentIndex,
+            onTap: ((value) {
+              setState(() {
+                currentIndex = value;
+              });
+            }),
+            elevation: 10,
+            unselectedItemColor: Colors.white,
+            items: [
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    "assets/icons/home.svg",
+                    color: currentIndex == 0 ? Colors.red : Colors.white,
+                  ),
+                  label: ''),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    "assets/icons/search.svg",
+                    color: currentIndex == 1 ? Colors.red : Colors.white,
+                  ),
+                  label: ''),
+              BottomNavigationBarItem(
+                  icon: Image.asset(
+                    "assets/icons/add.png",
+                    width: 60,
+                  ),
+                  label: ''),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    "assets/icons/chat.svg",
+                    color: currentIndex == 3 ? Colors.red : Colors.white,
+                  ),
+                  label: ''),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    "assets/icons/user.svg",
+                    color: currentIndex == 4 ? Colors.red : Colors.white,
+                  ),
+                  label: '')
+            ]),
+      ),
     );
   }
 }
