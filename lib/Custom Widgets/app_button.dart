@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../Constants/constants.dart';
 
 class AppButton extends StatelessWidget {
   final String title;
@@ -11,24 +12,24 @@ class AppButton extends StatelessWidget {
     required this.onPressed,
   }) : super(key: key);
 
-  get buttonColor => null;
+  //get buttonColor => null;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15.w),
         height: 45.h,
-        width: 1.sw,
         decoration: const BoxDecoration(
-            color: Colors.green,
+            color: buttonColor,
             borderRadius: BorderRadius.all(Radius.circular(100))),
         child: Center(
             child: Text(
-          " title",
+          title,
           style: TextStyle(
-              fontSize: 1.sp, color: Colors.black, fontWeight: FontWeight.w500),
+              fontSize: 17.sp,
+              color: Colors.white,
+              fontWeight: FontWeight.w500),
         )),
       ),
     );

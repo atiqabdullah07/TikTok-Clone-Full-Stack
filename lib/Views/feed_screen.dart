@@ -16,7 +16,7 @@ import '../Custom Widgets/video_payer.dart';
 import 'comments_screen.dart';
 
 class FeedScreen extends StatefulWidget {
-  FeedScreen({super.key});
+  const FeedScreen({super.key});
 
   @override
   State<FeedScreen> createState() => _FeedScreenState();
@@ -154,178 +154,185 @@ class _FeedScreenState extends State<FeedScreen> {
                                     ],
                                   ),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: BackdropFilter(
-                                      filter: ImageFilter.blur(
-                                          sigmaX: 5,
-                                          sigmaY: 5), // Adjust blur intensity
-                                      child: Container(
-                                        color: Colors.white.withOpacity(0.0),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 18),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              InkWell(
-                                                onTap: () async {},
-                                                child: Column(
-                                                  children: [
-                                                    LikeButton(
-                                                      size: 42,
-                                                      likeBuilder: (isLiked) {
-                                                        return Icon(
-                                                          Icons.favorite,
-                                                          size: 40,
-                                                          color: isLiked
-                                                              ? buttonColor
-                                                              : Colors.white,
-                                                        );
-                                                      },
-                                                      onTap: (isLiked) async {
-                                                        String uid =
-                                                            FirebaseAuth
-                                                                .instance
-                                                                .currentUser!
-                                                                .uid;
-                                                        Videolikes.contains(uid)
-                                                            ? setState(() {
-                                                                Videolikes
-                                                                    .remove(
-                                                                        uid);
-                                                              })
-                                                            : setState(
-                                                                () {
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                            sigmaX: 10,
+                                            sigmaY:
+                                                10), // Adjust blur intensity
+                                        child: Container(
+                                          color: Colors.white.withOpacity(0.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 18),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () async {},
+                                                  child: Column(
+                                                    children: [
+                                                      LikeButton(
+                                                        size: 42,
+                                                        likeBuilder: (isLiked) {
+                                                          return Icon(
+                                                            Icons.favorite,
+                                                            size: 40,
+                                                            color: isLiked
+                                                                ? buttonColor
+                                                                : Colors.white,
+                                                          );
+                                                        },
+                                                        onTap: (isLiked) async {
+                                                          String uid =
+                                                              FirebaseAuth
+                                                                  .instance
+                                                                  .currentUser!
+                                                                  .uid;
+                                                          Videolikes.contains(
+                                                                  uid)
+                                                              ? setState(() {
                                                                   Videolikes
-                                                                      .add(uid);
-                                                                },
-                                                              );
+                                                                      .remove(
+                                                                          uid);
+                                                                })
+                                                              : setState(
+                                                                  () {
+                                                                    Videolikes
+                                                                        .add(
+                                                                            uid);
+                                                                  },
+                                                                );
 
-                                                        videoController
-                                                            .likeVideo(
-                                                                videoController
-                                                                    .videosList[
-                                                                        index]
-                                                                    .id);
+                                                          videoController
+                                                              .likeVideo(
+                                                                  videoController
+                                                                      .videosList[
+                                                                          index]
+                                                                      .id);
 
-                                                        return true;
-                                                      },
-                                                      isLiked: videoController
-                                                              .videosList[index]
-                                                              .likes
-                                                              .contains(
-                                                                  FirebaseAuth
-                                                                      .instance
-                                                                      .currentUser!
-                                                                      .uid)
-                                                          ? true
-                                                          : false,
-                                                    ),
-                                                    Text(
-                                                      videoController
-                                                          .videosList[index]
-                                                          .likes
-                                                          .length
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12.sp),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  showModalBottomSheet(
-                                                      isScrollControlled: false,
-                                                      isDismissible: true,
-                                                      backgroundColor: Colors
-                                                          .black
-                                                          .withOpacity(0),
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return Container(
-                                                          decoration: const BoxDecoration(
-                                                              borderRadius: BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          40),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          40)),
-                                                              color:
-                                                                  Colors.white),
-                                                          child: CommentsScreen(
-                                                            commentsCount:
-                                                                videoController
-                                                                    .videosList[
-                                                                        index]
-                                                                    .commentCount
-                                                                    .toString(),
-                                                            profilePix:
-                                                                videoController
-                                                                    .videosList[
-                                                                        index]
-                                                                    .profilePath,
-                                                            id: videoController
+                                                          return true;
+                                                        },
+                                                        isLiked: videoController
                                                                 .videosList[
                                                                     index]
-                                                                .id,
-                                                          ),
-                                                        );
-                                                      });
-                                                },
-                                                child: Column(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      "assets/icons/comments.svg",
-                                                      color: Colors.white,
-                                                      width: 30.r,
-                                                    ),
-                                                    Text(
-                                                      videoController
-                                                          .videosList[index]
-                                                          .commentCount
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12.sp),
-                                                    )
-                                                  ],
+                                                                .likes
+                                                                .contains(
+                                                                    FirebaseAuth
+                                                                        .instance
+                                                                        .currentUser!
+                                                                        .uid)
+                                                            ? true
+                                                            : false,
+                                                      ),
+                                                      Text(
+                                                        videoController
+                                                            .videosList[index]
+                                                            .likes
+                                                            .length
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12.sp),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  commentsController.getComment(
-                                                      videoController
-                                                          .videosList[index]
-                                                          .id);
-                                                },
-                                                child: Column(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      "assets/icons/share.svg",
-                                                      color: Colors.white,
-                                                      width: 30.r,
-                                                    ),
-                                                    Text(
-                                                      '0',
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12.sp),
-                                                    )
-                                                  ],
+                                                InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                        isScrollControlled:
+                                                            false,
+                                                        isDismissible: true,
+                                                        backgroundColor: Colors
+                                                            .black
+                                                            .withOpacity(0),
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return Container(
+                                                            decoration: const BoxDecoration(
+                                                                borderRadius: BorderRadius.only(
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            40),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            40)),
+                                                                color: Colors
+                                                                    .white),
+                                                            child:
+                                                                CommentsScreen(
+                                                              commentsCount:
+                                                                  videoController
+                                                                      .videosList[
+                                                                          index]
+                                                                      .commentCount
+                                                                      .toString(),
+                                                              profilePix:
+                                                                  videoController
+                                                                      .videosList[
+                                                                          index]
+                                                                      .profilePath,
+                                                              id: videoController
+                                                                  .videosList[
+                                                                      index]
+                                                                  .id,
+                                                            ),
+                                                          );
+                                                        });
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        "assets/icons/comments.svg",
+                                                        color: Colors.white,
+                                                        width: 30.r,
+                                                      ),
+                                                      Text(
+                                                        videoController
+                                                            .videosList[index]
+                                                            .commentCount
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12.sp),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                                InkWell(
+                                                  onTap: () {
+                                                    commentsController
+                                                        .getComment(
+                                                            videoController
+                                                                .videosList[
+                                                                    index]
+                                                                .id);
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        "assets/icons/share.svg",
+                                                        color: Colors.white,
+                                                        width: 30.r,
+                                                      ),
+                                                      Text(
+                                                        '0',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12.sp),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ), // Adjust opacity for glass effect
-                                        // Replace with your content
-                                      ),
-                                    ),
-                                  ),
+                                        ),
+                                      )),
                                 ),
                                 SizedBox(
                                   height: 10.h,

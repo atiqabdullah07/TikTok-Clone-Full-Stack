@@ -1,14 +1,30 @@
-// import 'package:get/get.dart';
+import 'dart:developer';
 
-// import '../Models/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// class ProfileController extends GetxController {
-//   final RxList = <User>[].obs;
+import 'package:get/get.dart';
+import 'package:tik_tok_clone/Models/user_model.dart';
 
-//   Rx<String> _uid = ''.obs;
+import '../Constants/constants.dart';
 
-//   void updateUserId(String uid) {
-//     _uid.value = uid;
-//     getUserData();
-//   }
-// }
+class ProfileController extends GetxController {
+  late User user;
+
+  Future<void> getProfile() async {
+    try {
+      DocumentSnapshot userDoc = await firestore
+          .collection('users')
+          .doc(firebaseAuth.currentUser!.uid)
+          .get();
+
+      user = User(
+        name: userDoc["name"],
+        profilePhoto: userDoc["profilePhoto"],
+      );
+
+      print(user.profilePhoto);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+}

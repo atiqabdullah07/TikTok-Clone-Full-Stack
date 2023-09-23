@@ -20,64 +20,97 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: Container(
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Tic Tok Colne',
-                  style: TextStyle(
-                      color: buttonColor,
-                      fontSize: 35.sp,
-                      fontWeight: FontWeight.w900),
-                ),
-                SizedBox(
-                  height: 25.h,
-                ),
-                Text(
-                  'Login',
-                  style:
-                      TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                AppTextField(
-                    textEditingController: passwordController,
-                    hintText: 'Password'),
-                SizedBox(
-                  height: 10.h,
-                ),
-                AppButton(
-                  onPressed: () async {
-                    authController.loginUser(
-                        emailController.text, passwordController.text);
-                  },
-                  title: 'Login',
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/icons/Tiktok_Logo 1.png",
+              width: 200,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+                alignment: Alignment.center,
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an Account? "),
-                    InkWell(
-                        onTap: () {
-                          Get.to(SignUpScreen());
-                        },
-                        child: Text(
-                          'Regester Now',
-                          style: TextStyle(color: buttonColor),
-                        ))
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                          fontSize: 25.sp, fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    AppTextField(
+                      textEditingController: emailController,
+                      hintText: 'Email',
+                      icon: const Icon(Icons.email_outlined),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    AppTextField(
+                      textEditingController: passwordController,
+                      hintText: 'Password',
+                      obsecureText: true,
+                      icon: const Icon(Icons.lock_outline),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Forget Password?",
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.8),
+                              fontSize: 15),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    AppButton(
+                      onPressed: () async {
+                        authController.loginUser(
+                            emailController.text, passwordController.text);
+                      },
+                      title: 'Login',
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
                   ],
-                )
+                )),
+            const SizedBox(
+              height: 50,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Don't have an Account? ",
+                  style: TextStyle(fontSize: 15),
+                ),
+                InkWell(
+                    onTap: () {
+                      Get.to(const SignUpScreen());
+                    },
+                    child: const Text(
+                      'Regester Now',
+                      style: TextStyle(color: buttonColor, fontSize: 15),
+                    ))
               ],
-            )),
+            )
+          ],
+        ),
       ),
     );
   }

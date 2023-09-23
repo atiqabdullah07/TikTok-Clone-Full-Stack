@@ -3,14 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class User {
   String name;
   String profilePhoto;
-  String email;
-  String uid;
+  String? email;
+  String? uid;
 
-  User(
-      {required this.name,
-      required this.email,
-      required this.profilePhoto,
-      required this.uid});
+  User({required this.name, this.email, required this.profilePhoto, this.uid});
 
   Map<String, dynamic> toJson() =>
       {"name": name, "profilePhoto": profilePhoto, "email": email, "uid": uid};

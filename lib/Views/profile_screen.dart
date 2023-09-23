@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:tik_tok_clone/Controllers/profile_controller.dart';
 
+// ignore: must_be_immutable
 class ProfileScreen extends StatelessWidget {
   final String uid;
-  const ProfileScreen({super.key, required this.uid});
+  ProfileScreen({super.key, required this.uid});
+  ProfileController profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +29,10 @@ class ProfileScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ClipOval(
-                      child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: '',
-                    height: 100.h,
-                    width: 100.w,
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ))
                   // CircleAvatar(
-                  //   backgroundColor: Colors.white,
-                  //   radius: 50.r,
-                  //   backgroundImage: Network,
+                  //   radius: 50,
+                  //   backgroundImage: NetworkImage(
+                  //       profileController.user.profilePhoto.toString()),
                   // )
                 ],
               ),
@@ -104,8 +97,19 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                 ],
-              ),SizedBox(height: 20.h,),
-              Text('Sign Out',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.sp ),)
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              GestureDetector(
+                  onTap: () {
+                    profileController.getProfile();
+                  },
+                  child: Text(
+                    'Sign Out',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                  ))
             ],
           )
         ]),

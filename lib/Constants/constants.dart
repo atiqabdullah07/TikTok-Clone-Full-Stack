@@ -7,7 +7,7 @@ const backgroundColor = Colors.black;
 
 const buttonColor = Color(0xFFFF305D);
 const greyColor = Color(0xFFA8A8A8);
-
+const hintTextColor = Color(0xFFBABABA);
 const borderColor = Colors.grey;
 
 //FireBase

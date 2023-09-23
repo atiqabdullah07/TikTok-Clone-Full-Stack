@@ -38,10 +38,17 @@ class AuthController extends GetxController {
       final storageRef = FirebaseStorage.instance.ref('Profile Pics');
       final imgRef = storageRef.child('path_$imgId');
       var uploadTask = imgRef.putFile(image);
-      uploadTask.whenComplete(() async {
+
+      try {
+        // Wait for the upload to complete
+        await uploadTask;
+
+        // Once the upload is complete, get the download URL
         var url = await imgRef.getDownloadURL();
         imageUrl = url;
-      });
+      } catch (error) {
+        print("Error uploading image: $error");
+      }
     } catch (e) {
       log('Catch Block of uploadFile: ${e.toString()}');
     }
@@ -71,7 +78,7 @@ class AuthController extends GetxController {
             .doc(cred.user!.uid)
             .set(user.toJson());
 
-        Get.snackbar('USer', 'Added Successfully');
+        Get.snackbar('User', 'Added Successfully');
         log('User Added Successfully');
       } else {
         Get.snackbar('Error', 'Please Enter all the Information');

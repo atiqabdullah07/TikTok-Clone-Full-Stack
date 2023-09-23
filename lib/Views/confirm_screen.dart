@@ -72,14 +72,18 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                     height: 10,
                   ),
                   AppTextField(
-                      textEditingController: songController,
-                      hintText: 'Song Name'),
+                    textEditingController: songController,
+                    hintText: 'Song Name',
+                    icon: const Icon(Icons.music_video_outlined),
+                  ),
                   SizedBox(
                     height: 10.h,
                   ),
                   AppTextField(
-                      textEditingController: titleController,
-                      hintText: 'Title'),
+                    textEditingController: titleController,
+                    hintText: 'Title',
+                    icon: const Icon(Icons.description),
+                  ),
                   SizedBox(
                     height: 10.h,
                   ),

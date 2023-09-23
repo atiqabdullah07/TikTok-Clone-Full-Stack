@@ -17,6 +17,6 @@ void main() async {
             initialBinding: ControllerBinding(),
             debugShowCheckedModeBanner: false,
             title: 'Tik Tok',
-            home: LoginScreen(),
+            home: HomeScreen(),
           )));
 }

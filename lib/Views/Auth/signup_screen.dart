@@ -13,17 +13,31 @@ import '../../Custom Widgets/custom_textfield.dart';
 import 'login_screen.dart';
 
 // ignore: must_be_immutable
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   final AuthController authController = Get.put(AuthController());
+
   final TextEditingController usernameController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   File? pickedImage;
+
   Future pickImage() async {
     final XFile? tempimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    pickedImage = File(tempimage!.path);
+    setState(() {
+      pickedImage = File(tempimage!.path);
+    });
+
     log(pickedImage.toString());
 
     //imagePath = image!.path;
@@ -31,101 +45,122 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-            alignment: Alignment.center,
-            child: Column(
-              children: [
-                Text(
-                  'Tic Tok Colne',
-                  style: TextStyle(
-                      color: buttonColor,
-                      fontSize: 35.sp,
-                      fontWeight: FontWeight.w900),
-                ),
-                SizedBox(
-                  height: 25.h,
-                ),
-                Text(
-                  'Sign Up',
-                  style:
-                      TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 70.r,
-                      backgroundColor: Colors.white,
-                      backgroundImage: const NetworkImage(
-                          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
-                    ),
-                    Positioned(
-                        bottom: -10,
-                        left: 100.w,
-                        child: IconButton(
-                          onPressed: () {
-                            pickImage();
-                          },
-                          icon: Icon(
-                            Icons.add_a_photo,
-                            size: 30.r,
-                          ),
-                        ))
-                  ],
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                AppTextField(
-                    textEditingController: usernameController,
-                    hintText: 'Username'),
-                SizedBox(
-                  height: 10.h,
-                ),
-                AppTextField(
-                    textEditingController: emailController, hintText: 'Email'),
-                SizedBox(
-                  height: 10.h,
-                ),
-                AppTextField(
-                    textEditingController: passwordController,
-                    hintText: 'Password'),
-                SizedBox(
-                  height: 10.h,
-                ),
-                AppButton(
-                  onPressed: () {
-                    authController.registerUser(
-                        usernameController.text,
-                        emailController.text,
-                        passwordController.text,
-                        pickedImage);
-                  },
-                  title: 'Sign Up',
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Sign Up',
+              style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700),
+            ),
+            Container(
+                alignment: Alignment.center,
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Already have an account "),
-                    InkWell(
-                        onTap: () {
-                          Get.to(LoginScreen());
-                        },
-                        child: Text(
-                          'Login',
-                          style: TextStyle(color: buttonColor),
-                        ))
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Stack(
+                      children: [
+                        pickedImage != null
+                            ? CircleAvatar(
+                                radius: 60.r,
+                                backgroundColor: Colors.white,
+                                backgroundImage: FileImage(pickedImage!),
+                              )
+                            : CircleAvatar(
+                                radius: 60.r,
+                                backgroundColor: Colors.white,
+                                backgroundImage: const NetworkImage(
+                                    'https://www.logolynx.com/images/logolynx/03/039b004617d1ef43cf1769aae45d6ea2.png'),
+                              ),
+                        Positioned(
+                          bottom: 0,
+                          left: 80.w,
+                          child: GestureDetector(
+                            onTap: () {
+                              pickImage();
+                            },
+                            child: const CircleAvatar(
+                              backgroundColor: buttonColor,
+                              child: Icon(
+                                Icons.add,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    AppTextField(
+                      textEditingController: usernameController,
+                      hintText: 'Username',
+                      icon: const Icon(Icons.person_2_outlined),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    AppTextField(
+                      textEditingController: emailController,
+                      hintText: 'Email',
+                      icon: const Icon(Icons.email_outlined),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    AppTextField(
+                      textEditingController: passwordController,
+                      hintText: 'Password',
+                      icon: const Icon(Icons.lock_outline),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    AppButton(
+                      onPressed: () {
+                        authController.registerUser(
+                            usernameController.text,
+                            emailController.text,
+                            passwordController.text,
+                            pickedImage);
+                      },
+                      title: 'Sign Up',
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Already have an account ",
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Get.to(LoginScreen());
+                            },
+                            child: const Text(
+                              'Login',
+                              style:
+                                  TextStyle(color: buttonColor, fontSize: 15),
+                            ))
+                      ],
+                    )
                   ],
-                )
-              ],
-            )),
+                )),
+          ],
+        ),
       ),
     );
   }
