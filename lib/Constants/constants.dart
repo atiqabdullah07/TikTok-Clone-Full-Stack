@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 const backgroundColor = Colors.black;
 
 const buttonColor = Color(0xFFFF305D);
+const greyColor = Color(0xFFA8A8A8);
 
 const borderColor = Colors.grey;
 

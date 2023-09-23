@@ -4,25 +4,52 @@ import 'package:get/get.dart';
 
 import '../Constants/constants.dart';
 import '../Controllers/comments_controller.dart';
-import '../Custom Widgets/custom_textfield.dart';
 
 class CommentsScreen extends StatelessWidget {
   final String id;
-  CommentsScreen({super.key, required this.id});
+  final String profilePix;
+  final String commentsCount;
+  CommentsScreen(
+      {super.key,
+      required this.id,
+      required this.commentsCount,
+      required this.profilePix});
   final TextEditingController commentsTextController = TextEditingController();
   final CommentsController commentsController = Get.put(CommentsController());
 
   @override
   Widget build(BuildContext context) {
     commentsController.updatePostId(id);
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SizedBox(
-            width: 1.sw,
-            height: 1.sh,
-            child: Column(
-              children: [
-                Expanded(
+    return SingleChildScrollView(
+      child: SizedBox(
+          width: 1.sw,
+          height: 1.sh,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  height: 6,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(50)),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 5),
+                child: Text(
+                  "Comments",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              const Divider(),
+              SizedBox(
+                height: 350,
+                child: Expanded(
                   child: Obx(() {
                     return ListView.builder(
                         itemCount: commentsController.commentsList.length,
@@ -40,7 +67,7 @@ class CommentsScreen extends StatelessWidget {
                                       .commentsList[index].username,
                                   style: TextStyle(
                                       fontSize: 15.sp,
-                                      color: buttonColor,
+                                      color: greyColor,
                                       fontWeight: FontWeight.w700)),
                               SizedBox(
                                 width: 10.w,
@@ -50,14 +77,14 @@ class CommentsScreen extends StatelessWidget {
                                       .commentsList[index].comment,
                                   style: TextStyle(
                                       fontSize: 15.sp,
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontWeight: FontWeight.w500))
                             ]),
                             subtitle: Row(children: [
                               Text('Date',
                                   style: TextStyle(
                                     fontSize: 10.sp,
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   )),
                               SizedBox(
                                 width: 10.w,
@@ -65,7 +92,7 @@ class CommentsScreen extends StatelessWidget {
                               Text('Time',
                                   style: TextStyle(
                                     fontSize: 10.sp,
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   )),
                               SizedBox(
                                 width: 20.w,
@@ -74,7 +101,7 @@ class CommentsScreen extends StatelessWidget {
                                   '${commentsController.commentsList[index].likes.length} Likes',
                                   style: TextStyle(
                                     fontSize: 10.sp,
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   )),
                             ]),
                             trailing: InkWell(
@@ -90,36 +117,62 @@ class CommentsScreen extends StatelessWidget {
                                           .contains(
                                               firebaseAuth.currentUser!.uid)
                                       ? buttonColor
-                                      : Colors.white,
+                                      : greyColor,
                                   size: 20.r,
                                 )),
                           );
                         });
                   }),
                 ),
-                const Divider(),
-                ListTile(
-                  minLeadingWidth: 0,
-                  title: AppTextField(
-                    hintText: 'Comment',
-                    textEditingController: commentsTextController,
-                  ),
-                  trailing: InkWell(
-                    onTap: () {
-                      commentsController
-                          .postComment(commentsTextController.text);
-                      commentsTextController.clear();
-                    },
-                    child: Icon(
-                      Icons.send,
-                      color: buttonColor,
-                      size: 30.r,
+              ),
+              const Divider(),
+              ListTile(
+                horizontalTitleGap: 0,
+                leading: CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  backgroundImage: NetworkImage(profilePix),
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Container(
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                      color: Color(0xFFF5F5F5),
                     ),
+                    child: Row(children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: TextField(
+                            cursorColor: Colors.black,
+                            controller: commentsTextController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          commentsController
+                              .postComment(commentsTextController.text);
+                          commentsTextController.clear();
+                        },
+                        child: const CircleAvatar(
+                          backgroundColor: buttonColor,
+                          child: Icon(
+                            Icons.arrow_upward,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    ]),
                   ),
-                )
-              ],
-            )),
-      ),
+                ),
+              )
+            ],
+          )),
     );
   }
 }

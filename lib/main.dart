@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:tik_tok_clone/Views/Auth/login_screen.dart';
 import 'package:tik_tok_clone/Views/home_screen.dart';
+import 'package:tik_tok_clone/Views/testingui.dart';
 
-import 'Constants/constants.dart';
 import 'Controller Bindings/controller_bindings.dart';
 
 void main() async {
@@ -17,8 +17,6 @@ void main() async {
             initialBinding: ControllerBinding(),
             debugShowCheckedModeBanner: false,
             title: 'Tik Tok',
-            theme: ThemeData.dark()
-                .copyWith(scaffoldBackgroundColor: backgroundColor),
             home: LoginScreen(),
           )));
 }

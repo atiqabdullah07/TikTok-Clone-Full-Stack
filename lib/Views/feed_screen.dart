@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
+import 'package:like_button/like_button.dart';
 import '../Constants/constants.dart';
 import '../Controllers/comments_controller.dart';
 import '../Controllers/video_controller.dart';
@@ -15,9 +15,18 @@ import '../Custom Widgets/circle_animation.dart';
 import '../Custom Widgets/video_payer.dart';
 import 'comments_screen.dart';
 
-class FeedScreen extends StatelessWidget {
+class FeedScreen extends StatefulWidget {
   FeedScreen({super.key});
+
+  @override
+  State<FeedScreen> createState() => _FeedScreenState();
+}
+
+class _FeedScreenState extends State<FeedScreen> {
+  Color likeButton = Colors.white;
+
   final VideoController videoController = Get.put(VideoController());
+
   final CommentsController commentsController = Get.put(CommentsController());
 
   @override
@@ -28,7 +37,7 @@ class FeedScreen extends StatelessWidget {
           itemCount: videoController.videosList.length,
           controller: PageController(initialPage: 0, viewportFraction: 1),
           itemBuilder: (context, index) {
-            // final data = videoController.videoList[index];
+            var Videolikes = videoController.videosList[index].likes;
             return Stack(
               children: [
                 VideoPlayerItem(
@@ -58,12 +67,14 @@ class FeedScreen extends StatelessWidget {
                                           .videosList[index].username,
                                       style: TextStyle(
                                           fontSize: 15.sp,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       videoController.videosList[index].title,
                                       style: TextStyle(
                                           fontSize: 15.sp,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Row(
@@ -81,6 +92,7 @@ class FeedScreen extends StatelessWidget {
                                               .videosList[index].songName,
                                           style: TextStyle(
                                               fontSize: 15.sp,
+                                              color: Colors.white,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ],
@@ -157,17 +169,49 @@ class FeedScreen extends StatelessWidget {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               InkWell(
-                                                onTap: () {
-                                                  videoController.likeVideo(
-                                                      videoController
-                                                          .videosList[index]
-                                                          .id);
-                                                },
+                                                onTap: () async {},
                                                 child: Column(
                                                   children: [
-                                                    SvgPicture.asset(
-                                                      "assets/icons/heart.svg",
-                                                      color: videoController
+                                                    LikeButton(
+                                                      size: 42,
+                                                      likeBuilder: (isLiked) {
+                                                        return Icon(
+                                                          Icons.favorite,
+                                                          size: 40,
+                                                          color: isLiked
+                                                              ? buttonColor
+                                                              : Colors.white,
+                                                        );
+                                                      },
+                                                      onTap: (isLiked) async {
+                                                        String uid =
+                                                            FirebaseAuth
+                                                                .instance
+                                                                .currentUser!
+                                                                .uid;
+                                                        Videolikes.contains(uid)
+                                                            ? setState(() {
+                                                                Videolikes
+                                                                    .remove(
+                                                                        uid);
+                                                              })
+                                                            : setState(
+                                                                () {
+                                                                  Videolikes
+                                                                      .add(uid);
+                                                                },
+                                                              );
+
+                                                        videoController
+                                                            .likeVideo(
+                                                                videoController
+                                                                    .videosList[
+                                                                        index]
+                                                                    .id);
+
+                                                        return true;
+                                                      },
+                                                      isLiked: videoController
                                                               .videosList[index]
                                                               .likes
                                                               .contains(
@@ -175,9 +219,8 @@ class FeedScreen extends StatelessWidget {
                                                                       .instance
                                                                       .currentUser!
                                                                       .uid)
-                                                          ? buttonColor
-                                                          : Colors.white,
-                                                      width: 30.r,
+                                                          ? true
+                                                          : false,
                                                     ),
                                                     Text(
                                                       videoController
@@ -194,12 +237,45 @@ class FeedScreen extends StatelessWidget {
                                               ),
                                               InkWell(
                                                 onTap: () {
-                                                  Get.to(
-                                                    CommentsScreen(
-                                                      id: videoController
-                                                          .videosList[index].id,
-                                                    ),
-                                                  );
+                                                  showModalBottomSheet(
+                                                      isScrollControlled: false,
+                                                      isDismissible: true,
+                                                      backgroundColor: Colors
+                                                          .black
+                                                          .withOpacity(0),
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Container(
+                                                          decoration: const BoxDecoration(
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          40),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          40)),
+                                                              color:
+                                                                  Colors.white),
+                                                          child: CommentsScreen(
+                                                            commentsCount:
+                                                                videoController
+                                                                    .videosList[
+                                                                        index]
+                                                                    .commentCount
+                                                                    .toString(),
+                                                            profilePix:
+                                                                videoController
+                                                                    .videosList[
+                                                                        index]
+                                                                    .profilePath,
+                                                            id: videoController
+                                                                .videosList[
+                                                                    index]
+                                                                .id,
+                                                          ),
+                                                        );
+                                                      });
                                                 },
                                                 child: Column(
                                                   children: [

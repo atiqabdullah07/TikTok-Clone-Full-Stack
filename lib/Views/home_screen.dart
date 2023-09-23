@@ -34,8 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: screens[currentIndex],
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+        decoration: BoxDecoration(
+            color: Colors.black, borderRadius: BorderRadius.circular(100)),
         child: BottomNavigationBar(
+            backgroundColor: const Color(0xFF1E1E1E),
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: false,
             showUnselectedLabels: false,

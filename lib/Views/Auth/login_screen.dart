@@ -16,9 +16,11 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Container(
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -41,8 +43,6 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: 20.h,
                 ),
-                AppTextField(
-                    textEditingController: emailController, hintText: 'Email'),
                 SizedBox(
                   height: 10.h,
                 ),

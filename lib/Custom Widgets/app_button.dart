@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppButton extends StatelessWidget {
@@ -21,13 +21,14 @@ class AppButton extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 15.w),
         height: 45.h,
         width: 1.sw,
-        decoration: BoxDecoration(
-            color: Colors.red,
-            borderRadius: BorderRadius.all(Radius.circular(10.r))),
+        decoration: const BoxDecoration(
+            color: Colors.green,
+            borderRadius: BorderRadius.all(Radius.circular(100))),
         child: Center(
             child: Text(
-          title,
-          style: TextStyle(fontSize: 15.sp),
+          " title",
+          style: TextStyle(
+              fontSize: 1.sp, color: Colors.black, fontWeight: FontWeight.w500),
         )),
       ),
     );
