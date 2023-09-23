@@ -1,6 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../Constants/constants.dart';
@@ -120,91 +125,146 @@ class FeedScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    videoController.likeVideo(
-                                        videoController.videosList[index].id);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        Icons.favorite,
-                                        color: videoController
-                                                .videosList[index].likes
-                                                .contains(FirebaseAuth
-                                                    .instance.currentUser!.uid)
-                                            ? Colors.red
-                                            : Colors.white,
-                                        size: 35.r,
+                                Container(
+                                  height: 230,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(
+                                        0.1), // Adjust opacity for glass effect
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        spreadRadius: 5,
+                                        blurRadius: 20,
+                                        offset: const Offset(0, 3),
                                       ),
-                                      Text(
-                                        videoController
-                                            .videosList[index].likes.length
-                                            .toString(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12.sp),
-                                      )
                                     ],
                                   ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Get.to(
-                                      CommentsScreen(
-                                        id: videoController
-                                            .videosList[index].id,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: BackdropFilter(
+                                      filter: ImageFilter.blur(
+                                          sigmaX: 5,
+                                          sigmaY: 5), // Adjust blur intensity
+                                      child: Container(
+                                        color: Colors.white.withOpacity(0.0),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 18),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  videoController.likeVideo(
+                                                      videoController
+                                                          .videosList[index]
+                                                          .id);
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      "assets/icons/heart.svg",
+                                                      color: videoController
+                                                              .videosList[index]
+                                                              .likes
+                                                              .contains(
+                                                                  FirebaseAuth
+                                                                      .instance
+                                                                      .currentUser!
+                                                                      .uid)
+                                                          ? buttonColor
+                                                          : Colors.white,
+                                                      width: 30.r,
+                                                    ),
+                                                    Text(
+                                                      videoController
+                                                          .videosList[index]
+                                                          .likes
+                                                          .length
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12.sp),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.to(
+                                                    CommentsScreen(
+                                                      id: videoController
+                                                          .videosList[index].id,
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      "assets/icons/comments.svg",
+                                                      color: Colors.white,
+                                                      width: 30.r,
+                                                    ),
+                                                    Text(
+                                                      videoController
+                                                          .videosList[index]
+                                                          .commentCount
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12.sp),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  commentsController.getComment(
+                                                      videoController
+                                                          .videosList[index]
+                                                          .id);
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      "assets/icons/share.svg",
+                                                      color: Colors.white,
+                                                      width: 30.r,
+                                                    ),
+                                                    Text(
+                                                      '0',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12.sp),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ), // Adjust opacity for glass effect
+                                        // Replace with your content
                                       ),
-                                    );
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        Icons.comment,
-                                        color: Colors.white,
-                                        size: 35.r,
-                                      ),
-                                      Text(
-                                        videoController
-                                            .videosList[index].commentCount
-                                            .toString(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12.sp),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    commentsController.getComment(
-                                        videoController.videosList[index].id);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        Icons.reply,
-                                        color: Colors.white,
-                                        size: 35.r,
-                                      ),
-                                      Text(
-                                        '0',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12.sp),
-                                      )
-                                    ],
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
                                   height: 10.h,
                                 ),
-                                CircleAnimation(
-                                    child: CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        backgroundImage: NetworkImage(
-                                            videoController.videosList[index]
-                                                .profilePath)))
+                                CircleAvatar(
+                                  backgroundColor: Colors.black,
+                                  radius: 30,
+                                  child: CircleAnimation(
+                                      child: CircleAvatar(
+                                          radius: 15,
+                                          backgroundColor: Colors.white,
+                                          backgroundImage: NetworkImage(
+                                              videoController.videosList[index]
+                                                  .profilePath))),
+                                )
                               ],
                             ),
                           )

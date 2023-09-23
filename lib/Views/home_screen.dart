@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tik_tok_clone/Views/profile_screen.dart';
 import 'package:tik_tok_clone/Views/search_screen.dart';
 
+import '../Constants/constants.dart';
 import 'add_post_screen.dart';
 import 'feed_screen.dart';
 import 'message_screen.dart';
@@ -50,13 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     "assets/icons/home.svg",
-                    color: currentIndex == 0 ? Colors.red : Colors.white,
+                    color: currentIndex == 0 ? buttonColor : Colors.white,
                   ),
                   label: ''),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     "assets/icons/search.svg",
-                    color: currentIndex == 1 ? Colors.red : Colors.white,
+                    color: currentIndex == 1 ? buttonColor : Colors.white,
                   ),
                   label: ''),
               BottomNavigationBarItem(
@@ -68,13 +69,13 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     "assets/icons/chat.svg",
-                    color: currentIndex == 3 ? Colors.red : Colors.white,
+                    color: currentIndex == 3 ? buttonColor : Colors.white,
                   ),
                   label: ''),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     "assets/icons/user.svg",
-                    color: currentIndex == 4 ? Colors.red : Colors.white,
+                    color: currentIndex == 4 ? buttonColor : Colors.white,
                   ),
                   label: '')
             ]),
