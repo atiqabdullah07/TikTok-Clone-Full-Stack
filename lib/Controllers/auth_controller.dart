@@ -20,14 +20,25 @@ class AuthController extends GetxController {
     super.onReady();
     user = Rx<User?>(firebaseAuth.currentUser);
     user.bindStream(firebaseAuth.authStateChanges());
-    // ever(user, setInitialScreen);
+    print("Yes");
+    ever(user, setInitialScreen);
   }
 
   setInitialScreen(User? user) {
+    print("Current User is: $user");
     if (user == null) {
       Get.offAll(() => LoginScreen());
     } else {
       Get.offAll(() => const HomeScreen());
+    }
+  }
+
+  Future<void> signOutFromFirebase() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      print('Signed out');
+    } catch (e) {
+      print('Error signing out: $e');
     }
   }
 
@@ -94,6 +105,10 @@ class AuthController extends GetxController {
       if (email.isNotEmpty && password.isNotEmpty) {
         await firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
+
+        if (user != null) {
+          Get.to(HomeScreen());
+        }
       } else {
         Get.snackbar('Error', 'Please Enter both username and password');
       }

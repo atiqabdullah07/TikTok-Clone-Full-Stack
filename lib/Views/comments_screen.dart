@@ -68,41 +68,22 @@ class CommentsScreen extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 15.sp,
                                       color: greyColor,
-                                      fontWeight: FontWeight.w700)),
+                                      fontWeight: FontWeight.w500)),
                               SizedBox(
                                 width: 10.w,
                               ),
+                            ]),
+                            subtitle: Row(children: [
                               Text(
                                   commentsController
                                       .commentsList[index].comment,
                                   style: TextStyle(
                                       fontSize: 15.sp,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w500))
-                            ]),
-                            subtitle: Row(children: [
-                              Text('Date',
-                                  style: TextStyle(
-                                    fontSize: 10.sp,
-                                    color: Colors.black,
-                                  )),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Text('Time',
-                                  style: TextStyle(
-                                    fontSize: 10.sp,
-                                    color: Colors.black,
-                                  )),
+                                      fontWeight: FontWeight.w500)),
                               SizedBox(
                                 width: 20.w,
                               ),
-                              Text(
-                                  '${commentsController.commentsList[index].likes.length} Likes',
-                                  style: TextStyle(
-                                    fontSize: 10.sp,
-                                    color: Colors.black,
-                                  )),
                             ]),
                             trailing: InkWell(
                                 onTap: () {
@@ -110,15 +91,28 @@ class CommentsScreen extends StatelessWidget {
                                       commentsController
                                           .commentsList[index].id);
                                 },
-                                child: Icon(
-                                  Icons.favorite,
-                                  color: commentsController
-                                          .commentsList[index].likes
-                                          .contains(
-                                              firebaseAuth.currentUser!.uid)
-                                      ? buttonColor
-                                      : greyColor,
-                                  size: 20.r,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.favorite,
+                                      color: commentsController
+                                              .commentsList[index].likes
+                                              .contains(
+                                                  firebaseAuth.currentUser!.uid)
+                                          ? buttonColor
+                                          : Colors.grey.shade300,
+                                      size: 20.r,
+                                    ),
+                                    Text(
+                                        commentsController
+                                            .commentsList[index].likes.length
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 10.sp,
+                                          color: Colors.black,
+                                        )),
+                                  ],
                                 )),
                           );
                         });
@@ -147,7 +141,9 @@ class CommentsScreen extends StatelessWidget {
                           child: TextField(
                             cursorColor: Colors.black,
                             controller: commentsTextController,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
+                              hintText: "Send your comment...",
+                              hintStyle: TextStyle(color: Colors.grey.shade500),
                               border: InputBorder.none,
                             ),
                           ),

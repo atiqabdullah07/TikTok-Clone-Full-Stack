@@ -27,6 +27,7 @@ class CommentsController extends GetxController {
       books.get().then((snapshot) {
         commentsList.clear();
         for (var element in snapshot.docs) {
+          print(element.data()['profilePhoto']);
           commentsList.add(Comment(
             username: element.data()['username'],
             comment: element.data()['comment'],

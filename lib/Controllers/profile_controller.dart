@@ -10,6 +10,12 @@ import '../Constants/constants.dart';
 class ProfileController extends GetxController {
   late User user;
 
+  @override
+  void onInit() async {
+    super.onInit();
+    await getProfile();
+  }
+
   Future<void> getProfile() async {
     try {
       DocumentSnapshot userDoc = await firestore

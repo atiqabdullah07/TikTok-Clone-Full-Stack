@@ -37,7 +37,7 @@ class _FeedScreenState extends State<FeedScreen> {
           itemCount: videoController.videosList.length,
           controller: PageController(initialPage: 0, viewportFraction: 1),
           itemBuilder: (context, index) {
-            var Videolikes = videoController.videosList[index].likes;
+            var videolikes = videoController.videosList[index].likes;
             return Stack(
               children: [
                 VideoPlayerItem(
@@ -73,9 +73,12 @@ class _FeedScreenState extends State<FeedScreen> {
                                     Text(
                                       videoController.videosList[index].title,
                                       style: TextStyle(
-                                          fontSize: 15.sp,
+                                          fontSize: 14.sp,
                                           color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
                                     ),
                                     Row(
                                       children: [
@@ -93,10 +96,13 @@ class _FeedScreenState extends State<FeedScreen> {
                                           style: TextStyle(
                                               fontSize: 15.sp,
                                               color: Colors.white,
-                                              fontWeight: FontWeight.bold),
+                                              fontWeight: FontWeight.w500),
                                         ),
                                       ],
-                                    )
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
                                   ]),
                             ),
                           ),
@@ -191,16 +197,16 @@ class _FeedScreenState extends State<FeedScreen> {
                                                                   .instance
                                                                   .currentUser!
                                                                   .uid;
-                                                          Videolikes.contains(
-                                                                  uid)
+                                                          videolikes
+                                                                  .contains(uid)
                                                               ? setState(() {
-                                                                  Videolikes
+                                                                  videolikes
                                                                       .remove(
                                                                           uid);
                                                                 })
                                                               : setState(
                                                                   () {
-                                                                    Videolikes
+                                                                    videolikes
                                                                         .add(
                                                                             uid);
                                                                   },

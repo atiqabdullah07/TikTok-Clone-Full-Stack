@@ -71,7 +71,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  AppTextField(
+                  AppTextField2(
                     textEditingController: songController,
                     hintText: 'Song Name',
                     icon: const Icon(Icons.music_video_outlined),
@@ -79,7 +79,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  AppTextField(
+                  AppTextField2(
                     textEditingController: titleController,
                     hintText: 'Title',
                     icon: const Icon(Icons.description),

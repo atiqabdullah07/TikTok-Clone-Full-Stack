@@ -21,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   final screens = [
-    FeedScreen(),
+    const FeedScreen(),
     SearchScreen(),
     const AddPost(),
     MessageScreen(),
