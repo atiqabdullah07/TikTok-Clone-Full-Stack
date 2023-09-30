@@ -10,9 +10,10 @@ class SearchControllers extends GetxController {
 
   Future<void> searchUsers(String typedUser) async {
     try {
-      log('Hello world');
-      var books = FirebaseFirestore.instance.collection('users').where('name', isGreaterThanOrEqualTo: typedUser);
-      books.get().then((snapshot) {
+      var users = FirebaseFirestore.instance
+          .collection('users')
+          .where('name', isGreaterThanOrEqualTo: typedUser);
+      users.get().then((snapshot) {
         searchedUser.clear();
         for (var element in snapshot.docs) {
           searchedUser.add(
@@ -32,7 +33,7 @@ class SearchControllers extends GetxController {
 
   // searchedUser.bindStream(firestore
   //     .collection('users')
-  //    
+  //
   //     .snapshots()
   //     .map((QuerySnapshot query) {
   //   List<User> retVal = [];

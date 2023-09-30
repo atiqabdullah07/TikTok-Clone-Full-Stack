@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import 'package:tik_tok_clone/Models/user_model.dart' as model;
@@ -69,12 +70,14 @@ class AuthController extends GetxController {
   Future<void> registerUser(
       String username, String email, String password, File? image) async {
     try {
+      easyLoading();
       if (username.isNotEmpty &&
           password.isNotEmpty &&
           email.isNotEmpty &&
           image != null) {
         UserCredential cred = await firebaseAuth.createUserWithEmailAndPassword(
             email: email, password: password);
+        signOutFromFirebase();
 
         await uploadToStorage(image);
         log('Picked Image Url $imageUrl');
@@ -88,13 +91,16 @@ class AuthController extends GetxController {
             .collection('users')
             .doc(cred.user!.uid)
             .set(user.toJson());
-
+        EasyLoading.dismiss();
+        Get.to(LoginScreen());
         Get.snackbar('User', 'Added Successfully');
         log('User Added Successfully');
       } else {
+        EasyLoading.dismiss();
         Get.snackbar('Error', 'Please Enter all the Information');
       }
     } catch (e) {
+      EasyLoading.dismiss();
       Get.snackbar('Error', e.toString());
       log('Catch Block of RegisterUser: ${e.toString()}');
     }
@@ -102,18 +108,23 @@ class AuthController extends GetxController {
 
   Future<void> loginUser(String email, String password) async {
     try {
+      easyLoading();
       if (email.isNotEmpty && password.isNotEmpty) {
         await firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
 
         if (user != null) {
+          EasyLoading.dismiss();
           Get.to(HomeScreen());
         }
       } else {
+        EasyLoading.dismiss();
+
         Get.snackbar('Error', 'Please Enter both username and password');
       }
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      EasyLoading.dismiss();
+      Get.snackbar('Error', "Wrong Password, Try Again!");
       log('Catch Block of Login User: ${e.toString()}');
     }
   }
