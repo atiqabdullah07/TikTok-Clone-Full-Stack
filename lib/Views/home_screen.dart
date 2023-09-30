@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: ''),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
-                    "assets/icons/chat.svg",
+                    "assets/icons/message.svg",
                     color: currentIndex == 3 ? buttonColor : Colors.white,
                   ),
                   label: ''),

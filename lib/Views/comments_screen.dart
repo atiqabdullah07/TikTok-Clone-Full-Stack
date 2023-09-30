@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tik_tok_clone/Controllers/profile_controller.dart';
 
 import '../Constants/constants.dart';
 import '../Controllers/comments_controller.dart';
@@ -16,7 +17,7 @@ class CommentsScreen extends StatelessWidget {
       required this.profilePix});
   final TextEditingController commentsTextController = TextEditingController();
   final CommentsController commentsController = Get.put(CommentsController());
-
+  final ProfileController profileController = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     commentsController.updatePostId(id);
@@ -124,7 +125,8 @@ class CommentsScreen extends StatelessWidget {
                 horizontalTitleGap: 0,
                 leading: CircleAvatar(
                   backgroundColor: Colors.grey,
-                  backgroundImage: NetworkImage(profilePix),
+                  backgroundImage: NetworkImage(
+                      profileController.user.profilePhoto.toString()),
                 ),
                 title: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),

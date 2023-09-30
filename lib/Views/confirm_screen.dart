@@ -66,37 +66,50 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
             left: 0,
             right: 0,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
+              child: Container(
+                height: 300,
+                width: 1.sw,
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40),
+                        topRight: Radius.circular(40))),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      AppTextField(
+                        textEditingController: titleController,
+                        hintText: 'Title',
+                        icon: const Icon(Icons.title),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      AppTextField(
+                        textEditingController: songController,
+                        hintText: 'Song Name',
+                        icon: const Icon(Icons.music_note),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      AppButton(
+                          title: 'Share',
+                          onPressed: () {
+                            uploadController.uploadVideo(songController.text,
+                                titleController.text, widget.videoFile);
+                          }),
+                      SizedBox(
+                        height: 10.h,
+                      )
+                    ],
                   ),
-                  AppTextField2(
-                    textEditingController: songController,
-                    hintText: 'Song Name',
-                    icon: const Icon(Icons.music_video_outlined),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  AppTextField2(
-                    textEditingController: titleController,
-                    hintText: 'Title',
-                    icon: const Icon(Icons.description),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  AppButton(
-                      title: 'Share',
-                      onPressed: () {
-                        uploadController.uploadVideo(songController.text,
-                            titleController.text, widget.videoFile);
-                      }),
-                  SizedBox(
-                    height: 10.h,
-                  )
-                ],
+                ),
               ),
             ),
           )

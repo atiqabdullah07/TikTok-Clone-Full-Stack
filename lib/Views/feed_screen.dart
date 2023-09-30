@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
+import 'package:tik_tok_clone/Controllers/profile_controller.dart';
 import '../Constants/constants.dart';
 import '../Controllers/comments_controller.dart';
 import '../Controllers/video_controller.dart';
@@ -26,6 +27,7 @@ class _FeedScreenState extends State<FeedScreen> {
   Color likeButton = Colors.white;
 
   final VideoController videoController = Get.put(VideoController());
+  final ProfileController profileController = Get.put(ProfileController());
 
   final CommentsController commentsController = Get.put(CommentsController());
 
@@ -85,16 +87,16 @@ class _FeedScreenState extends State<FeedScreen> {
                                         Icon(
                                           Icons.music_note,
                                           color: Colors.white,
-                                          size: 20.r,
+                                          size: 18.r,
                                         ),
                                         SizedBox(
-                                          width: 5.w,
+                                          width: 2.w,
                                         ),
                                         Text(
                                           videoController
                                               .videosList[index].songName,
                                           style: TextStyle(
-                                              fontSize: 15.sp,
+                                              fontSize: 12.sp,
                                               color: Colors.white,
                                               fontWeight: FontWeight.w500),
                                         ),

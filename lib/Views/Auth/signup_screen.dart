@@ -77,8 +77,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             : CircleAvatar(
                                 radius: 60.r,
                                 backgroundColor: Colors.white,
-                                backgroundImage: const NetworkImage(
-                                    'https://www.logolynx.com/images/logolynx/03/039b004617d1ef43cf1769aae45d6ea2.png'),
+                                backgroundImage:
+                                    const AssetImage("assets/icons/dp.png"),
                               ),
                         Positioned(
                           bottom: 0,

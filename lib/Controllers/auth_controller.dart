@@ -21,12 +21,12 @@ class AuthController extends GetxController {
     super.onReady();
     user = Rx<User?>(firebaseAuth.currentUser);
     user.bindStream(firebaseAuth.authStateChanges());
-    print("Yes");
+    //  print("Yes");
     ever(user, setInitialScreen);
   }
 
   setInitialScreen(User? user) {
-    print("Current User is: $user");
+    //  print("Current User is: $user");
     if (user == null) {
       Get.offAll(() => LoginScreen());
     } else {
@@ -37,9 +37,9 @@ class AuthController extends GetxController {
   Future<void> signOutFromFirebase() async {
     try {
       await FirebaseAuth.instance.signOut();
-      print('Signed out');
+      //  print('Signed out');
     } catch (e) {
-      print('Error signing out: $e');
+      //   print('Error signing out: $e');
     }
   }
 
@@ -59,7 +59,7 @@ class AuthController extends GetxController {
         var url = await imgRef.getDownloadURL();
         imageUrl = url;
       } catch (error) {
-        print("Error uploading image: $error");
+        //   print("Error uploading image: $error");
       }
     } catch (e) {
       log('Catch Block of uploadFile: ${e.toString()}');
@@ -113,9 +113,10 @@ class AuthController extends GetxController {
         await firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
 
+        // ignore: unnecessary_null_comparison
         if (user != null) {
           EasyLoading.dismiss();
-          Get.to(HomeScreen());
+          Get.to(const HomeScreen());
         }
       } else {
         EasyLoading.dismiss();
